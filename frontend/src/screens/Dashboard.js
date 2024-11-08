@@ -96,7 +96,7 @@ const Dashboard = () => {
     return (
       <div
         style={{
-          backgroundColor: "#20094d",
+          backgroundColor: "#240850",
           top: "0",
           left: "0",
           height: "100%",
@@ -163,69 +163,17 @@ const Dashboard = () => {
         </Helmet>
         <nav>
           <div className="dashboard">
-            <Link to="#">
-              <div className="logo">
-                <img src="/images/rx-light.png" className="logo" alt="" />
-              </div>
-            </Link>
-
-            <div className="profile-area">
-              <div
-                id="hamburger"
-                onClick={() => {
-                  user.isActive
-                    ? setDropdown(!dropdown)
-                    : setBlacklist(!blacklist);
-                }}
-              ></div>
-
-              <div className="nav-box">
-                {dropdown ? (
-                  <div id="dropItem">
-                    <div className="dropwrap">
-                      <Link to={"/dashboard"}>
-                        <h4>Dashboard Home</h4>
-                      </Link>
-                      <Link to={"/personal-details"}>
-                        <h4>Personal Details</h4>
-                      </Link>
-                      {!edm ? (
-                        <Link to={"/step1"}>
-                          <h4 className={""}>Create a Brief</h4>
-                        </Link>
-                      ) : (
-                        <Link to={"/question_continue"}>
-                          <h4 className={""}>Create a Brief</h4>
-                        </Link>
-                      )}
-                      <Link to={"/briefs"}>
-                        <h4 className={""}>All Briefs</h4>
-                      </Link>
-                      <Link to={"/campaigns"}>
-                        <h4 className={""}>Campaigns</h4>
-                      </Link>
-
-                      <Link to={"/calendar"}>
-                        <h4 className={""}>Calendar</h4>
-                      </Link>
-
-                      <ExternalLink href="/logout" target="_self">
-                        <h4>Log Out</h4>
-                      </ExternalLink>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
+            <div className="logo">
+              <div id="hamburger" onClick={() => setClose(false)}></div>
             </div>
           </div>
         </nav>
+
         {backdrop ? (
           <div className="backdrop">
             <ThreeDots
               type="ThreeDots"
-              height={40}
+              height={30}
               width={80}
               color={"white"}
             />
@@ -236,15 +184,51 @@ const Dashboard = () => {
 
         <div className="wrap">
           <main>
+            <div></div>
             <aside className={close ? "moveback" : "movehere"}>
               {close ? (
-                <button id="close-btn" onClick={() => setClose(false)}>
-                  <span className="material-icons-sharp">menu_open</span>
-                </button>
+                <>
+                  <div
+                    className="logo"
+                    style={{ marginLeft: "20px", marginBottom: "1rem" }}
+                  >
+                    <Link to="/">
+                      <img
+                        src="/images/rx.png"
+                        className="logo"
+                        alt="Riyadh Air"
+                      />
+                    </Link>
+                  </div>
+
+                  <button id="close-btn" onClick={() => setClose(false)}>
+                    <span
+                      style={{ color: "white" }}
+                      className="material-icons-sharp"
+                    >
+                      menu_open
+                    </span>
+                  </button>
+                </>
               ) : (
-                <button id="close-btn" onClick={() => setClose(true)}>
-                  <span className="material-icons-sharp">close</span>
-                </button>
+                <>
+                  <div
+                    className="logo"
+                    style={{ marginLeft: "20px", marginBottom: "1rem" }}
+                  >
+                    <Link to="/">
+                      <img src="/images/rx.png" className="logo" alt="" />
+                    </Link>
+                  </div>
+                  <button id="close-btn" onClick={() => setClose(true)}>
+                    <span
+                      style={{ color: "white" }}
+                      className="material-icons-sharp"
+                    >
+                      close
+                    </span>
+                  </button>
+                </>
               )}
               {!isloaded ? (
                 <div
@@ -668,155 +652,81 @@ const Dashboard = () => {
             margin: 0 auto;
           }
           nav img.logo {
-            width: 12rem;
+            width: 10rem;
             display: block;
+          }
 
-            width: 100px;
+          nav #hamburger {
+            background: url("/images/menu-black.png");
+            background-repeat: no-repeat;
+            background-size: 45%;
+            background-position: center;
+            cursor: pointer;
+            position: absolute;
+            height: 65px;
+            width: 60px;
+            display: block;
+            transform: translate(-50%, -20%);
+            top: 65%;
+            left: 5%;
           }
 
           nav .logo.active {
             display: block;
           }
 
-          nav .profile-area {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
-          }
-          nav .profile-area .profile-photo {
-            display: block;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            overflow: hidden;
-          }
-
-          nav .profile-area button {
-            display: none;
-          }
-
-          nav .profile-area .theme-btn {
-            display: flex;
-            background: var(--color-light);
-            width: 5rem;
-            height: 2rem;
-            cursor: pointer;
-            border-radius: var(--border-radius-2);
-          }
-
-          nav .profile-area .theme-btn span {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-          }
-          nav .profile-area .theme-btn .active {
-            background: var(--color-dark);
-            border-radius: var(--border-radius-2);
-            color: var(--color-white);
-          }
-
-          nav .profile-area .profile {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-          }
-
-          nav #hamburger {
-            background: url("./../../images/menu-black.png");
-            background-repeat: no-repeat;
-            background-size: 40%;
-            background-position: center;
-            cursor: pointer;
-            position: absolute;
-            height: 85px;
-            width: 80px;
-            display: block;
-            transform: translate(-50%, -50%);
-            top: 55%;
-            left: 90%;
-            display: none;
-          }
-
-          .nav-box {
-            width: 35px;
-            height: 35px;
-            left: 90%;
-            top: 50%;
-            z-index: 1000;
-          }
-
-          .nav-box #dropItem {
-            width: 280px;
-            background: var(--color-white);
-            position: absolute;
-            border: 1px solid #ebebeb;
-            border-top: none;
-            transform: translate(-84%, 18%);
-            display: block;
-          }
-
-          .nav-box #dropItem.open {
-            display: block;
-          }
-          #dropItem .disabled {
-            background-color: #ddd;
-            color: #888;
-            cursor: default;
-            border: #ddd;
-          }
-
-          .nav-box .dropwrap {
-            padding-bottom: 0px;
-            width: 88%;
-            background: var(--color-white);
-            margin-top: 3%;
-            margin-left: 6%;
-          }
-
-          .nav-box .dropwrap a {
-            color: #777;
-            font-weight: 500;
-            font-size: 13px;
-            font-family: "Noto Sans TC", sans-serif;
-            height: 45px;
-            line-height: 45px;
-            width: 100%;
-            position: relative;
-            display: block;
-          }
-          .nav-box .dropwrap a h4 {
-            margin-bottom: 0px;
-            width: 100%;
-            position: relative;
-            display: block;
-            height: 45px;
-            line-height: 45px;
-          }
-
-          .nav-box .dropwrap a:hover {
-            border-bottom: 1px solid #484848;
-          }
-
           /* ============ ASIDE & SIDEBAR ============ */
           main {
             display: grid;
-            grid-template-columns: 18rem auto 30rem;
+            grid-template-columns: 22rem 30rem;
             gap: 2rem;
             width: 96%;
             margin: 1rem auto 4rem;
           }
 
-          main aside {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 88vh;
-            transform: translateX(0%);
+          .wrap .logo {
+            margin-top: 5px;
+            margin-btoom: 3px;
+            height: 50px;
           }
+
+          .wrap .container {
+            max-width: 1080px;
+            margin-right: 80px;
+          }
+          .wrap .buffer {
+            display: block;
+            width: 310px;
+            height: 100%;
+          }
+
+          .wrap .container-fluid {
+            display: grid;
+            grid-template-columns: 25% 75%;
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+          }
+
+          .wrap .sub-footer {
+            display: grid;
+            grid-template-columns: 25% 75%;
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+            background-color: #fff;
+          }
+
+          main aside {
+            position: fixed;
+            top: 0;
+            background-color: #240850;
+            height: 100vh;
+            z-index: 1000;
+            width: 25rem;
+            transform: translateX(-10%);
+          }
+
           main .sidebar .alertCircle {
             height: 20px;
             width: 20px;
@@ -825,9 +735,9 @@ const Dashboard = () => {
             font-size: 12px;
             border-radius: 50%;
             text-align: center;
-            line-height: 18px;
+            line-height: 20px;
             position: absolute;
-            transform: translate(-450%, -20%);
+            transform: translate(-80%, -20%);
           }
 
           /* will be shown only on mobile and tablets */
@@ -844,18 +754,15 @@ const Dashboard = () => {
             align-items: center;
             gap: 1.2rem;
             height: 4.2rem;
-            color: var(--color-gray-light);
+            color: #fff;
             position: relative;
           }
-          main aside .sidebar {
-            background-color: white;
-            -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-              0 1px 3px rgba(0, 0, 0, 0.28);
-            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-              0 1px 3px rgba(0, 0, 0, 0.28);
-          }
+
           main aside .sidebar a:hover {
-            background-color: var(--color-light);
+            background-color: #817eff;
+            border-radius: 30px;
+            text-align: center;
+            width: 90%;
           }
 
           main aside .sidebar a span {
@@ -865,7 +772,7 @@ const Dashboard = () => {
           }
 
           main aside .sidebar a.active {
-            background: var(--color-white);
+            background: #240850;
             color: var(--color-primary);
           }
 
@@ -878,7 +785,7 @@ const Dashboard = () => {
           }
 
           main aside .sidebar a:hover {
-            color: var(--color-primary);
+            color: white;
           }
 
           main aside .sidebar a:hover span {
@@ -949,6 +856,10 @@ const Dashboard = () => {
           .leftBox p {
             font-size: 28px;
             font-weight: 600;
+          }
+
+          main section {
+            width: 880px;
           }
 
           main section.midde .header {
@@ -1030,6 +941,13 @@ const Dashboard = () => {
             justify-content: space-between;
           }
 
+          main section.middle .container-fluid {
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+            display: block;
+          }
+
           main section.middle .card .middle .chip {
             width: 3.5rem;
           }
@@ -1078,7 +996,8 @@ const Dashboard = () => {
 
           .topBox .controlButton .controlpanel a {
             width: 130px;
-            background-color: #817eff;
+            background: linear-gradient(210deg, #006098, rgba(0, 96, 152, 0));
+            background-color: #54c8e8;
             border-radius: 4px;
           }
 
@@ -1214,6 +1133,17 @@ const Dashboard = () => {
             border: 1px solid #e40000;
             margin-left: 10px;
           }
+
+          .grid .appliedbefore {
+            color: #e40000;
+            font-size: 16px;
+            height: 28px;
+            line-height: 26px;
+            padding-left: 3px;
+            padding-right: 3px;
+            border: 1px solid #e40000;
+            margin-left: 10px;
+          }
           .blockfilter {
             position: absolute;
             display: block;
@@ -1324,7 +1254,7 @@ const Dashboard = () => {
             transform: translateX(76px);
           }
           .checkbox-btn .slidekey:before {
-            content: "Active";
+            content: "Live";
             position: absolute;
             height: 100%;
             width: 76px;
@@ -1332,13 +1262,13 @@ const Dashboard = () => {
             top: 0;
             left: -76px;
             line-height: 47px;
-            background-color: #14a248;
+            background-color: #817eff;
             color: white;
             font-size: 14px;
             font-weight: bold;
           }
           .checkbox-btn .slidekey:after {
-            content: "Dormant";
+            content: "Hidden";
             background-color: #2b2b2b;
             color: white;
             position: absolute;
@@ -1352,19 +1282,43 @@ const Dashboard = () => {
             font-weight: bold;
           }
 
-          @media screen and (max-width: 768px) {
-            .checkbox-btn {
-              transform: translate(0%, 16%);
-            }
-          }
-
           /* ============ MEDIA QUERIES FOR TABLETS =========*/
           @media screen and (max-width: 1024px) {
             nav .search-bar {
               display: none;
             }
-            nav .profile-area {
-              gap: 2rem;
+
+            .wrap .buffer {
+              display: none;
+            }
+            .wrap .container-fluid {
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              grid-template-columns: 100%;
+              width: 100%;
+              padding-left: 0;
+              padding-right: 0;
+            }
+
+            main section.middle .container-fluid {
+              width: 490px;
+              margin: 0px;
+            }
+
+            .wrap .sub-footer {
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              grid-template-columns: 100%;
+              width: 100%;
+              padding-left: 0;
+              padding-right: 0;
+            }
+
+            .wrap .logo {
+              margin-top: 5px;
+              margin-btoom: 3px;
             }
 
             .myaccountbox {
@@ -1382,23 +1336,21 @@ const Dashboard = () => {
             }
 
             main .moveback {
-              transform: translateX(-80%);
+              transform: translateX(-100%);
               transition: all 300ms ease;
             }
             main .movehere {
               transform: translateX(0%);
               transition: all 300ms ease;
+              width: 100%;
             }
             main aside {
               position: fixed;
               top: 0;
               left: -100%;
               z-index: 1000;
-              background: var(--color-white);
               width: 22rem;
               height: 100vh;
-              box-shadow: 2rem 0 2rem var(--color-primary-light);
-              display: none;
               animation: showSidebar 500ms ease-in forwards;
             }
 
@@ -1424,7 +1376,7 @@ const Dashboard = () => {
             }
 
             main aside .sidebar {
-              margin-top: 4rem;
+              margin-top: 1rem;
             }
 
             main aside .updates {
@@ -1454,9 +1406,25 @@ const Dashboard = () => {
             footer .font-weight-light {
               display: none !important;
             }
+            .wrap .buffer {
+              display: none;
+            }
+            .wrap .container-fluid {
+              margin-left: auto;
+              margin-right: auto;
+              width: 100%;
+              grid-template-columns: 100%;
+              padding-left: 0;
+              padding-right: 0;
+              display: block;
+            }
+            main section.middle .container-fluid {
+              width: 490px;
+              margin: 0px;
+            }
 
             main .moveback {
-              transform: translateX(-80%);
+              transform: translateX(-100%);
               transition: all 300ms ease;
             }
             main .movehere {
@@ -1464,9 +1432,6 @@ const Dashboard = () => {
               transition: all 300ms ease;
             }
 
-            nav .profile-area {
-              gap: 2.6rem;
-            }
             nav .profile h5,
             nav .profile span {
               display: none;
@@ -1478,18 +1443,13 @@ const Dashboard = () => {
 
             .ad-banner {
               height: 180px;
-              width: 100%;
+              width: 440px;
               position: relative;
               margin-top: 20px;
-              background: url("/images/tutors.jpg") no-repeat center center;
+              background: url("/images/rx-787.png") no-repeat center center;
               background-size: cover;
               background-position: 0px 0px;
-            }
-            nav #hamburger {
-              display: block;
-            }
-            nav .nav-name {
-              display: none;
+              margin-left: 40px;
             }
           }
         `}</style>
