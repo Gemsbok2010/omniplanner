@@ -27,7 +27,6 @@ const Step6 = () => {
               email: response.data.email,
               isLoggedIn: true,
               isActive: response.data.isActive,
-              nanoId: response.data.nanoId,
               isAdmin: response.data.isAdmin,
             })
           );
@@ -83,8 +82,6 @@ const Step6 = () => {
           .wrap .img-fluid {
             transform: translateX(0%);
           }
-
-      
 
           .wrap .questionCard {
             width: 450px;

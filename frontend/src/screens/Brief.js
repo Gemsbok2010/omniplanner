@@ -239,7 +239,6 @@ const Brief = () => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         _id: identity,
-        nanoId: user.nanoId,
         firstName: firstName,
         lastName: lastName,
         email: user.email,

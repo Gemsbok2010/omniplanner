@@ -63,7 +63,6 @@ const loginValidation = (data) => {
         "string.email":
           "<b>Email</b> must include '@' in the Email address or it may include some formatting errors.",
       }),
-    remember: Joi.boolean(),
   });
   return schema.validate(data);
 };
@@ -113,12 +112,6 @@ const detailsValidation = (data) => {
   });
   return schema.validate(data);
 };
-
-
-
-
-
-
 
 const applicationValidation = (data) => {
   const schema = Joi.object({

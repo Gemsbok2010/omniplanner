@@ -27,6 +27,7 @@ const Home = () => {
   // ========== POST ================
   const onSubmit = async (e) => {
     e.preventDefault();
+
     setIsloaded(true);
     fetch(process.env.REACT_APP_BACKEND_URL + "api/auth/login", {
       method: "POST",

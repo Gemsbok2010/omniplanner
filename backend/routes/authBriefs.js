@@ -327,8 +327,6 @@ router.get("/database", async (req, res) => {
   });
 });
 
-
-
 //============ GET CALENDAR.JS ==============
 router.get("/calendar", async (req, res) => {
   let email = req.query.email;
@@ -349,56 +347,6 @@ router.get("/calendar", async (req, res) => {
   }
 });
 
-// ============= JOB CASES (from dashboard.js) ================
-router.get("/jobcases", async (req, res, next) => {
-  const who = await User.find({ nanoId: req.query.nanoId });
 
-  try {
-    const rte = await Newsletter.find({
-      email: who[0].email,
-      showTicket: true,
-      edm: "RTE",
-    }).countDocuments();
-
-    const edm = await Newsletter.find({
-      email: who[0].email,
-      showTicket: true,
-      edm: "eDM",
-    }).countDocuments();
-
-    const campaign = await Newsletter.find({
-      email: who[0].email,
-      showTicket: true,
-      edm: "Event",
-    }).countDocuments();
-
-    const event = await Newsletter.find({
-      email: who[0].email,
-      showTicket: true,
-      edm: "Event",
-    }).countDocuments();
-
-    const expired = await Newsletter.find({
-      showTicket: false,
-      email: who[0].email,
-    }).countDocuments();
-
-    const current = await Newsletter.find({
-      showTicket: true,
-      email: who[0].email,
-    }).countDocuments();
-
-    res.status(200).json({
-      expired: expired,
-      current: current,
-      rte: rte,
-      campaign: campaign,
-      event: event,
-      edm: edm,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 module.exports = router;

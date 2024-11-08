@@ -68,7 +68,6 @@ const BriefEdit = () => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
           _id: identity,
-          nanoId: user.nanoId,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,

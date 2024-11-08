@@ -118,7 +118,7 @@ router.put("/sleepCampaign/:id", async (req, res) => {
   }
 
   const total = await Campaign.find({
-    nanoId: campaign.nanoId,
+    email: campaign.email,
   }).countDocuments();
 
   let perPage = 10;

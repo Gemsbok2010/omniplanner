@@ -108,7 +108,7 @@ function App() {
                 }}
                 src="/images/rx.png"
                 width="150px"
-                alt=""
+                alt="Riyadh Air"
               />
             </div>
           </div>

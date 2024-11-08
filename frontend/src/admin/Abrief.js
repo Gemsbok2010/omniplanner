@@ -390,7 +390,6 @@ const Abrief = () => {
 
   // =========== CUSTOMISED CSV FILE ============
   const headers = [
-    { label: "isLocum", key: "isLocum" },
     { label: "Id", key: "_id" },
     { label: "Locum Id", key: "locumId" },
     { label: "Last Name", key: "lastName" },

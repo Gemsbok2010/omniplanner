@@ -45,7 +45,6 @@ const postsRoute = require("./routes/auth");
 const usersRoute = require("./routes/authUsers");
 const briefsRoute = require("./routes/authBriefs");
 const listingsRoute = require("./routes/authListings");
-const commRoute = require("./routes/authComm");
 const dashboardRoute = require("./routes/dashboard");
 
 //Routes Middleware
@@ -54,7 +53,6 @@ app.use("/api/auth", postsRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/briefs", briefsRoute);
 app.use("/api/listings", listingsRoute);
-app.use("/api/comm", commRoute);
 app.use("/api/dashboard", dashboardRoute);
 
 const User = require("./models/userModel");
@@ -121,18 +119,6 @@ mongoose.connect(
   },
   () => console.log("connected to database")
 );
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-  app.get("*", (req, res) =>
-    res.sendFile(
-      path.resolve(__dirname, "../", "frontend", "build", "index.html")
-    )
-  );
-} else {
-  app.get("/", (req, res) => res.send("Please set to production"));
-}
 
 //Listening
 const port = 4000;

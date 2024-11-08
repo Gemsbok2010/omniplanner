@@ -19,6 +19,7 @@ const Campaigns = () => {
   const [total, setTotal] = useState([]);
   const [sort, setSort] = useState(-1);
   const [display, setDisplay] = useState([]);
+  const [isloaded, setIsloaded] = useState(false);
 
   // =============== PAGE BUTTONS ================
 
@@ -109,6 +110,7 @@ const Campaigns = () => {
   // ============= INITAL LOAD ===============
   useEffect(() => {
     let isCancelled = false;
+    setIsloaded(false);
     if (!ReactSession.get("camp_category")) {
       setCategory("");
     } else {
@@ -128,6 +130,7 @@ const Campaigns = () => {
       setMaxPage(data.maxPage);
       setSort(data.sort);
       setDisplay(data.display);
+      setIsloaded(true);
     };
 
     if (isCancelled === false) {
@@ -241,6 +244,46 @@ const Campaigns = () => {
       setBackdrop(false);
     }
   };
+
+  // ============== LOADING ============== //
+  if (!isloaded)
+    return (
+      <div
+        style={{
+          backgroundColor: "#20094d",
+          top: "0",
+          left: "0",
+          height: "100%",
+          width: "100%",
+          zIndex: "2500",
+          display: "block",
+          position: "fixed",
+        }}
+      >
+        <div
+          style={{
+            textAlign: "center",
+            position: "absolute",
+            display: "block",
+            height: "100%",
+            width: "100%",
+            top: "90%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+          }}
+        >
+          <img
+            style={{
+              animation: "loadingframe 1000ms infinite",
+              animationDirection: "alternate-reverse",
+            }}
+            src="/images/rx.png"
+            width="150px"
+            alt="Riyadh Air"
+          />
+        </div>
+      </div>
+    );
 
   return (
     <>

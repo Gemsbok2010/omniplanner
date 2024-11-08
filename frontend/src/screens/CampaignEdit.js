@@ -1136,7 +1136,7 @@ const CampaignEdit = () => {
             }}
             src="/images/rx.png"
             width="150px"
-            alt=""
+            alt="Riyadh Air"
           />
         </div>
       </div>

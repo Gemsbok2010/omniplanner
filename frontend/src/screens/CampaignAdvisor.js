@@ -570,13 +570,15 @@ const CampaignAdvisor = () => {
       const data = await res.json();
 
       if (isCancelled === false) {
-        setIsloaded(true);
         setNoOfCases(data.num);
         setCampaigns(data.campaigns);
         setPage(data.page);
         setMaxPage(data.maxPage);
         setSort(data.sort);
         setListOfCategories(data.categories);
+        setTimeout(function () {
+          setIsloaded(true);
+        }, 1000);
       }
     };
     if (isCancelled === false) {
@@ -698,7 +700,7 @@ const CampaignAdvisor = () => {
             }}
             src="/images/rx.png"
             width="150px"
-            alt=""
+            alt="Riyadh Air"
           />
         </div>
       </div>

@@ -21,19 +21,11 @@ const Dashboard = () => {
   // ============== BACKDROP ============== //
   const [backdrop, setBackdrop] = useState(false);
   const [edm, setEdm] = useState("");
-  const [userInfo, setUserInfo] = useState({});
-  const [locum, setLocum] = useState({});
   const [total, setTotal] = useState("");
   const [dropdown, setDropdown] = useState(false);
   const [blacklist, setBlacklist] = useState(false);
-  const [show, setShow] = useState(false);
   const [close, setClose] = useState(false);
-
-  const [campaign, setCampaign] = useState("");
-  const [event, setEvent] = useState("");
-  const [rte, setRte] = useState("");
-  const [newsletter, setNewsletter] = useState("");
-  const [noOfCases, setNoOfCases] = useState("");
+  const [campaigns, setCampaigns] = useState("");
   const [applicants, setApplicants] = useState("");
   const [myListings, setMylistings] = useState("");
   const [newApply, setNewApply] = useState("");
@@ -44,7 +36,6 @@ const Dashboard = () => {
   // ============ LOCUM DATA ===========
   useEffect(() => {
     setIsloaded(false);
-
     setEdm(ReactSession.get("edm"));
     axios
       .get(
@@ -54,50 +45,25 @@ const Dashboard = () => {
       )
       .then((response) => {
         if (response.status === 200) {
-          if (response.data.locum !== null) {
-            setShow(response.data.locum.showLocum);
-          }
-          setTimeout(function () {
-            setUserInfo(response.data.user);
-            setLocum(response.data.locum);
-            setTotal(response.data.total);
-            setNoOfCases(response.data.num);
-            setApplicants(response.data.applicants);
-            setMylistings(response.data.mylistings);
-            setNewApply(response.data.newApply);
-            dispatch(
-              login({
-                firstName: response.data.user.firstName,
-                isLoggedIn: true,
-                lastName: response.data.user.lastName,
-                email: response.data.user.email,
-                isLocum: response.data.user.isLocum,
-                isActive: response.data.user.isActive,
-                isAdmin: response.data.user.isAdmin,
-              })
-            );
-            setIsloaded(true);
-          }, 1000);
-        }
-      });
-  }, []);
-
-  // ========== LOGGEDIN APPLICANT APPLIED =========
-  useEffect(() => {
-    axios
-      .get(
-        process.env.REACT_APP_BACKEND_URL +
-          "api/briefs/jobcases?nanoId=" +
-          user.nanoId
-      )
-      .then((response) => {
-        if (response.status === 200) {
+          console.log(response.data);
+          setCampaigns(response.data.campaigns);
           setExpired(response.data.expired);
           setCurrent(response.data.current);
-          setNewsletter(response.data.edm);
-          setEvent(response.data.event);
-          setRte(response.data.rte);
-          setCampaign(response.data.campaign);
+          setTotal(response.data.total);
+          setApplicants(response.data.applicants);
+          setMylistings(response.data.mylistings);
+          setNewApply(response.data.newApply);
+          dispatch(
+            login({
+              firstName: response.data.user.firstName,
+              isLoggedIn: true,
+              lastName: response.data.user.lastName,
+              email: response.data.user.email,
+              isActive: response.data.user.isActive,
+              isAdmin: response.data.user.isAdmin,
+            })
+          );
+          setIsloaded(true);
         }
       });
   }, []);
@@ -298,7 +264,7 @@ const Dashboard = () => {
                     color={"grey"}
                   />
                 </div>
-              ) : userInfo.isActive === false ? (
+              ) : user.isActive === false ? (
                 <div className="sidebar">
                   <Link to="/dashboard" className="active disabled">
                     <span className="material-icons-sharp">dashboard</span>
@@ -321,7 +287,7 @@ const Dashboard = () => {
                     <h4>All Briefs</h4>
                   </Link>
                   <Link to="#" className="disabled">
-                    <span class="material-symbols-outlined">campaign</span>
+                    <span className="material-symbols-outlined">campaign</span>
                   </Link>
                   <Link to="#" className="disabled">
                     <span className="material-symbols-outlined">
@@ -366,11 +332,11 @@ const Dashboard = () => {
                     <h4>All Briefs</h4>
                   </Link>
                   <Link to="/campaigns">
-                    <span class="material-symbols-outlined">campaign</span>
+                    <span className="material-symbols-outlined">campaign</span>
                     <h4>Campaign Ideas</h4>
                   </Link>
                   <Link to="/campaignadvisor">
-                    <span class="material-symbols-outlined">campaign</span>
+                    <span className="material-symbols-outlined">campaign</span>
                     <h4>Campaign Advisor</h4>
                   </Link>
                   <Link to="/calendar">
@@ -433,7 +399,7 @@ const Dashboard = () => {
                       </p>
                     </div>
                     <div className="controlButton">
-                      {userInfo.isAdmin ? (
+                      {user.isAdmin ? (
                         <button className="controlpanel">
                           <Link
                             style={{ wdith: "100px" }}
@@ -459,43 +425,7 @@ const Dashboard = () => {
                 </div>
                 <div className="gridBox">
                   <div className="grid">
-                    {userInfo.isActive ? (
-                      ""
-                    ) : (
-                      <div className="blockfilter"></div>
-                    )}
-                    <Link to="/briefs">
-                      <h3>Brief Types</h3>
-                      <div
-                        className="city"
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                          top: "8%",
-                          position: "relative",
-                        }}
-                      >
-                        <div>
-                          <p>Campaign</p>
-                          <p>Event</p>
-                          <p>RTE</p>
-                          <p>eDM</p>
-                        </div>
-                        <div>
-                          <p>{campaign}</p>
-                          <p>{event}</p>
-                          <p>{rte}</p>
-                          <p>{newsletter}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="grid">
-                    {userInfo.isActive ? (
-                      ""
-                    ) : (
-                      <div className="blockfilter"></div>
-                    )}
+                    {user.isActive ? "" : <div className="blockfilter"></div>}
                     <Link to="/briefs">
                       <h3>Briefs Scheduled</h3>
                       {total <= 1 ? (
@@ -512,11 +442,24 @@ const Dashboard = () => {
                     </Link>
                   </div>
                   <div className="grid">
-                    {userInfo.isActive ? (
-                      ""
-                    ) : (
-                      <div className="blockfilter"></div>
-                    )}
+                    {user.isActive ? "" : <div className="blockfilter"></div>}
+                    <Link to="/briefs">
+                      <h3>Campaigns</h3>
+                      {campaigns <= 1 ? (
+                        <p>
+                          {campaigns}
+                          <span> campaign</span>
+                        </p>
+                      ) : (
+                        <p>
+                          {campaigns}
+                          <span> campaigns</span>
+                        </p>
+                      )}
+                    </Link>
+                  </div>
+                  <div className="grid">
+                    {user.isActive ? "" : <div className="blockfilter"></div>}
                     <Link to="#">
                       <h3>Active Briefs</h3>
                       <div
@@ -540,11 +483,7 @@ const Dashboard = () => {
                     </Link>
                   </div>
                   <div className="grid">
-                    {userInfo.isActive ? (
-                      ""
-                    ) : (
-                      <div className="blockfilter"></div>
-                    )}
+                    {user.isActive ? "" : <div className="blockfilter"></div>}
                     <Link to="/listingmanager">
                       <h3>Messages</h3>
                       <div
