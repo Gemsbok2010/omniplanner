@@ -55,8 +55,6 @@ router.post("/login", async (req, res) => {
   const { email } = req.body;
   const rx_email = email.split("@")[1];
 
-  console.log("hereX", email);
-
   if (rx_email !== "riyadhair.com")
     return res.status(400).json({
       invalid: "The <b>email</b> address must be your Riyadh Air email.</a>",
@@ -64,21 +62,19 @@ router.post("/login", async (req, res) => {
 
   //LETS VALIDATE THE DATA BEFORE
   const { error } = await loginValidation(req.body);
-  console.log("hereXX");
-  if (error) return res.status(400).json({ invalid: error.details[0].message });
 
-  console.log(error);
+  if (error) return res.status(400).json({ invalid: error.details[0].message });
 
   // If no email exists in database
   const user = await User.findOne({ email });
-  console.log("hereXXX", user);
+
   if (!user) {
     res.status(400).json({
       invalid: "Email is incorrect. Please check your inputs and try again.",
     });
   } else {
     const authToken = generateToken(user);
-    console.log("hereXXXX");
+
     res.cookie("authToken", authToken, { httpOnly: false });
     if (user.isAdmin) {
       const adminToken = generateToken(user);

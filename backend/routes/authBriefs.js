@@ -7,7 +7,6 @@ const moment = require("moment");
 const cron = require("node-cron");
 
 // Imports
-const User = require("../models/userModel");
 const Newsletter = require("../models/briefModel");
 
 // ======== CRON JOB - Schedule tasks to be run on the server ======== //.
@@ -346,7 +345,5 @@ router.get("/calendar", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
 
 module.exports = router;

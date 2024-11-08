@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const moment = require("moment");
 require("dotenv/config");
 const multer = require("multer");
 const path = require("path");
