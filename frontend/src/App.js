@@ -79,7 +79,7 @@ function App() {
         fallback={
           <div
             style={{
-              backgroundColor: "#20094d",
+              backgroundColor: "#240850",
               top: "0",
               left: "0",
               height: "100%",

@@ -1,23 +1,9 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { ExternalLink } from "react-external-link";
-import { login } from "../redux/userInfo";
 
-// Three dots
-import { ThreeDots } from "react-loader-spinner";
-
-const Footer = ({ asx }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.userInfo.value);
-  const [email, setEmail] = useState("");
+const Footer = () => {
   const [thisyear, setThisyear] = useState(null);
-
-  const googleUrlAddress =
-    process.env.REACT_APP_BACKEND_URL + `auth/google?dd=${location.pathname}`;
 
   // ============ GET CURRENT YEAR ===============
   useEffect(() => {
@@ -26,409 +12,48 @@ const Footer = ({ asx }) => {
     setThisyear(year);
   }, []);
 
-  // ======= TAKE OUT DUPLICATE PROFESSIONS ======
-  const [listOfProfessions, setListOfProfessions] = useState([]);
-
-  // ============= GET APPLICATIONSMANAGER ===============
-  // ============= GET SEARCH FILTER ================
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    // declare the data fetching function
-    const fetchData = async () => {
-      const res = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "api/admin/footer"
-      );
-      const data = await res.json();
-
-      if (isCancelled === false) {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-        console.log(data);
-        setListOfProfessions(data.professions);
-      }
-    };
-    if (isCancelled === false) {
-      // call the function
-      fetchData()
-        // make sure to catch any error
-        .catch(console.error);
-    }
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  const noDuplicates = [
-    ...new Map(
-      listOfProfessions.map((list) => [list.professionName, list])
-    ).values(),
-  ];
-
-  // ========== ERROR MESSAGE ===============
-  const [updateNote, setUpdateNote] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-
-  function outPutErrorMessagesInQuestionCard(errorMessage) {
-    setUpdateNote(true);
-    setErrorMsg(errorMessage);
-  }
-
-  // ============= LOGIN QUESTION CARD =================
-  const [questionCard, setQuestionCard] = useState(false);
-  const [backdrop, setBackdrop] = useState(false);
-  const [password, setPassword] = useState("");
-  const [isloaded, setIsloaded] = useState(false);
-  const [vanishemail, setVanishemail] = useState(true);
-  const [vanishpwd, setVanishpwd] = useState(true);
-
-  const onLoginForm = async (e) => {
-    e.preventDefault();
-    setIsloaded(true);
-    fetch(process.env.REACT_APP_BACKEND_URL + "api/auth/login", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ email: email, password: password }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.invalid) {
-          outPutErrorMessagesInQuestionCard(data.invalid);
-          setIsloaded(false);
-        }
-        if (
-          data.user.survey === "" ||
-          data.user.phone === "" ||
-          data.user.profession === "" ||
-          data.user.street === ""
-        ) {
-          setIsloaded(false);
-          dispatch(
-            login({
-              firstName: data.user.firstName,
-              lastName: data.user.lastName,
-              email: data.user.email,
-              filename: data.user.filename,
-              isLoggedIn: true,
-              isLocum: data.user.isLocum,
-              isActive: data.user.isActive,
-              nanoId: data.user.nanoId,
-              isAdmin: data.user.isAdmin,
-              completeAccess: false,
-            })
-          );
-
-          navigate("/personal-details");
-        } else {
-          setIsloaded(false);
-          dispatch(
-            login({
-              firstName: data.user.firstName,
-              lastName: data.user.lastName,
-              email: data.user.email,
-              filename: data.user.filename,
-              isLoggedIn: true,
-              isLocum: data.user.isLocum,
-              isActive: data.user.isActive,
-              nanoId: data.user.nanoId,
-              isAdmin: data.user.isAdmin,
-              completeAccess: true,
-            })
-          );
-          navigate("/");
-          setBackdrop(false);
-          setQuestionCard(false);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
   return (
     <>
-      {/* BACKDROP */}
-      {backdrop ? (
-        <div
-          className="backdrop"
-          onClick={() => {
-            setBackdrop(false);
-            setQuestionCard(false);
-          }}
-        ></div>
-      ) : (
-        ""
-      )}
       {/* QUESTION CARD */}
       <div className="wrap">
         <div className="pageBottom container-fluid">
           <div className="buffer"></div>
           <div className="container">
-            <div className="container pb-4">
-              <div className="row">
-                <div className="col-md-3">
-                  <div className="bigClass">
-                    {noDuplicates.slice(0, 6).map((profession) => {
-                      return user.isLoggedIn ? (
-                        <Link
-                          to={`/searchlist?professions=${profession.professionName}&index=${profession._id}`}
-                          key={profession._id}
-                          onClick={(e) => {
-                            asx(e, profession._id);
-                          }}
-                        >
-                          {profession.professionName}
-                        </Link>
-                      ) : (
-                        <Link
-                          to="#"
-                          key={profession._id}
-                          onClick={() => {
-                            setQuestionCard(true);
-                            setBackdrop(true);
-                          }}
-                        >
-                          {" "}
-                          {profession.professionName}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="bigClass">
-                    {noDuplicates.slice(5, 11).map((profession) => {
-                      return user.isLoggedIn ? (
-                        <Link
-                          to={`/searchlist?professions=${profession.professionName}&index=${profession._id}`}
-                          key={profession._id}
-                          onClick={(e) => {
-                            asx(e, profession._id);
-                          }}
-                        >
-                          {profession.professionName}
-                        </Link>
-                      ) : (
-                        <Link
-                          to="#"
-                          onClick={() => {
-                            setQuestionCard(true);
-                            setBackdrop(true);
-                          }}
-                        >
-                          {" "}
-                          {profession.professionName}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="bigClass">
-                    {noDuplicates.slice(10, 16).map((profession) => {
-                      return user.isLoggedIn ? (
-                        <Link
-                          to={`/searchlist?professions=${profession.professionName}&index=${profession._id}`}
-                          key={profession._id}
-                          onClick={(e) => {
-                            asx(e, profession._id);
-                          }}
-                        >
-                          {profession.professionName}
-                        </Link>
-                      ) : (
-                        <Link
-                          to="#"
-                          onClick={() => {
-                            setQuestionCard(true);
-                            setBackdrop(true);
-                          }}
-                        >
-                          {" "}
-                          {profession.professionName}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="bigClass last">
-                    {noDuplicates.slice(15, 21).map((profession) => {
-                      return (
-                        <Link
-                          to={`/searchlist?professions=${profession.professionName}`}
-                          key={profession._id}
-                          onClick={(e) => {
-                            asx(e, profession._id);
-                          }}
-                        >
-                          {profession.professionName}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
             <p className="title my-4">Destinations</p>
             <div className="container">
               <div className="row">
                 <div className="col-md-3">
                   <div className="bigClass">
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Riyadh
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Jeddah
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Dammam
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Dubai
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Amman
-                    </Link>
+                    <Link to={"#"}>Riyadh</Link>
+                    <Link to={"#"}>Jeddah</Link>
+                    <Link to={"#"}>Dammam</Link>
+                    <Link to={"#"}>Dubai</Link>
+                    <Link to={"#"}>Amman</Link>
                   </div>
                 </div>
                 <div className="col-md-3">
                   <div className="bigClass">
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Istanbul
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Cairo
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      New Delhi
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Mumbai
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Hyderabad
-                    </Link>
+                    <Link to={"#"}>Istanbul</Link>
+                    <Link to={"#"}>Cairo</Link>
+                    <Link to={"#"}>New Delhi</Link>
+                    <Link to={"#"}>Mumbai</Link>
+                    <Link to={"#"}>Hyderabad</Link>
                   </div>
                 </div>
                 <div className="col-md-3">
                   <div className="bigClass">
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Karachi
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Islamabad
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Dhaka
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Bangkok
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        user.isLoggedIn ? asx(e) : setQuestionCard(true);
-                        setBackdrop(true);
-                      }}
-                    >
-                      Shanghai
-                    </Link>
+                    <Link to={"#"}>Karachi</Link>
+                    <Link to={"#"}>Islamabad</Link>
+                    <Link to={"#"}>Dhaka</Link>
+                    <Link to={"#"}>Bangkok</Link>
+                    <Link to={"#"}>Shanghai</Link>
                   </div>
                 </div>
                 <div className="col-md-3">
                   <div className="bigClass last">
-                    <Link to="searchlist?location=New Zealand">London</Link>
-                    <Link to="searchlist?location=New Zealand">Paris</Link>
-                    <Link to="searchlist?location=New Zealand">Munich</Link>
+                    <Link to={"#"}>London</Link>
+                    <Link to={"#"}>Paris</Link>
+                    <Link to={"#"}>Munich</Link>
                   </div>
                 </div>
               </div>

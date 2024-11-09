@@ -671,7 +671,7 @@ const CampaignAdvisor = () => {
     return (
       <div
         style={{
-          backgroundColor: "#20094d",
+          backgroundColor: "#240850",
           top: "0",
           left: "0",
           height: "100%",
@@ -2424,6 +2424,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Saudi Arabia" ? (
                                       <img
+                                        key={1}
                                         src="/images/saudi.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2436,6 +2437,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "China" ? (
                                       <img
+                                        key={2}
                                         src="/images/china.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2448,6 +2450,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "South Korea" ? (
                                       <img
+                                        key={3}
                                         src="/images/korea.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2460,6 +2463,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Japan" ? (
                                       <img
+                                        key={4}
                                         src="/images/japan.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2472,6 +2476,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Jordan" ? (
                                       <img
+                                        key={5}
                                         src="/images/jordan.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2484,6 +2489,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Germany" ? (
                                       <img
+                                        key={6}
                                         src="/images/germany.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2497,6 +2503,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Spain" ? (
                                       <img
+                                        key={7}
                                         src="/images/spain.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2509,6 +2516,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "India" ? (
                                       <img
+                                        key={8}
                                         src="/images/india.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2521,6 +2529,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Pakistan" ? (
                                       <img
+                                        key={9}
                                         src="/images/pakistan.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2533,6 +2542,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Bangladesh" ? (
                                       <img
+                                        key={10}
                                         src="/images/bangladesh.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2545,6 +2555,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Thailand" ? (
                                       <img
+                                        key={11}
                                         src="/images/thailand.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2557,6 +2568,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "France" ? (
                                       <img
+                                        key={12}
                                         src="/images/france.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2569,6 +2581,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "United Kingdom" ? (
                                       <img
+                                        key={13}
                                         src="/images/uk.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2581,6 +2594,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Turkiye" ? (
                                       <img
+                                        key={14}
                                         src="/images/turkiye.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2593,6 +2607,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "Egypt" ? (
                                       <img
+                                        key={15}
                                         src="/images/egypt.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2605,6 +2620,7 @@ const CampaignAdvisor = () => {
                                   {campaign.market.map((mktt) => {
                                     return mktt === "United Arab Emirates" ? (
                                       <img
+                                        key={16}
                                         src="/images/uae.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2633,6 +2649,7 @@ const CampaignAdvisor = () => {
                                   {campaign.toMarket.map((mktt) => {
                                     return mktt === "Saudi Arabia" ? (
                                       <img
+                                        key={1}
                                         src="/images/saudi.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2645,6 +2662,7 @@ const CampaignAdvisor = () => {
                                   {campaign.toMarket.map((mktt) => {
                                     return mktt === "China" ? (
                                       <img
+                                        key={2}
                                         src="/images/china.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
@@ -2657,6 +2675,7 @@ const CampaignAdvisor = () => {
                                   {campaign.toMarket.map((mktt) => {
                                     return mktt === "South Korea" ? (
                                       <img
+                                        key={3}
                                         src="/images/korea.png"
                                         width="26px"
                                         style={{ marginRight: "2px" }}
